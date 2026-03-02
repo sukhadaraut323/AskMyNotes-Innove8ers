@@ -80,17 +80,24 @@ export default function SetupPage({ subjects, updateSubject, onReady, API }) {
 
             <div style={{ marginBottom: 10, minHeight: 28 }}>
               {s.files.map((f) => (
-                <span key={f.name} style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  background: "var(--surface)", border: "1px solid var(--border)",
-                  borderRadius: 6, padding: "4px 8px", fontSize: 11, margin: 3
-                }}>
-                  {f.type === "pdf" ? "📄" : "📝"} {f.name}
-                  <button
-                    onClick={() => updateSubject(s.id, { files: s.files.filter((x) => x.name !== f.name) })}
-                    style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 14, lineHeight: 1 }}
-                  >×</button>
-                </span>
+                <div key={f.name}>
+                  <span style={{
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    background: "var(--surface)", border: `1px solid ${f.warning ? "var(--yellow)" : "var(--border)"}`,
+                    borderRadius: 6, padding: "4px 8px", fontSize: 11, margin: 3
+                  }}>
+                    {f.type === "pdf" ? "📄" : "📝"} {f.name}
+                    <button
+                      onClick={() => updateSubject(s.id, { files: s.files.filter((x) => x.name !== f.name) })}
+                      style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 14, lineHeight: 1 }}
+                    >×</button>
+                  </span>
+                  {f.warning && (
+                    <div style={{ fontSize: 11, color: "var(--yellow)", margin: "4px 3px 0", lineHeight: 1.4 }}>
+                      {f.warning}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
 
